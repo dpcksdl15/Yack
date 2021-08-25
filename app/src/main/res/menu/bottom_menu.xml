@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/nv_bt_3"
+        android:enabled="true"
+        android:title=""
+        />
+    <item
+        android:id="@+id/md_search"
+        android:icon="@drawable/nv_bt_1"
+        android:enabled="true"
+        android:title=""
+        />
+    <item
+        android:id="@+id/yg_sell"
+        android:icon="@drawable/nv_bt_2"
+        android:enabled="true"
+        android:title=""
+        />
+
+    <item
+        android:id="@+id/md_consulting"
+        android:icon="@drawable/nv_bt_4"
+        android:enabled="true"
+        android:title=""
+        />
+    <item
+        android:id="@+id/my_info"
+        android:icon="@drawable/nv_bt_5"
+        android:enabled="true"
+        android:title=""
+        />
+
+
+</menu>
