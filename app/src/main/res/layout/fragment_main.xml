@@ -71,7 +71,7 @@
             android:layout_width="152dp"
             android:layout_height="152dp"
             android:layout_marginLeft="10dp"
-            app:srcCompat="@drawable/main_bt_4"
+
             android:scaleType="centerCrop"
             android:background="@drawable/main_button_backgound"/>
 
