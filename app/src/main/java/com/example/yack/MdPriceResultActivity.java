@@ -1,6 +1,8 @@
 package com.example.yack;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,6 +50,8 @@ public class MdPriceResultActivity extends AppCompatActivity {
     String queryUrl2;
     String queryUrl;
 
+
+
     URL url;
 
     ArrayList<String> list = new ArrayList<>();
@@ -72,6 +76,43 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
+
+
+        Intent intent = getIntent();
+        String search_text = intent.getExtras().getString("md_name");
+
+        et_search_text.setText(search_text);
+
+
+        //검색어 넘어왔을 경우
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                list.clear();
+                list2.clear();
+                list3.clear();
+                list4.clear();
+
+                url = null;
+
+
+                getXmlData();
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+                        Adapter adapter = new Adapter(list,list2,list3,list4) ;
+                        recyclerView.setAdapter(adapter) ;
+                        tv_search_count.setText(String.valueOf(adapter.getItemCount()));
+                        Log.d("확인", "확인시간");
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        }).start();
+
 
         cl = new View.OnClickListener() {
             @Override
@@ -109,16 +150,24 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
                                 getXmlData();
 
+
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+                                        // 리사이클러뷰에 adapter 객체 지정.
+
+
                                         Adapter adapter = new Adapter(list,list2,list3,list4) ;
                                         recyclerView.setAdapter(adapter) ;
-
                                         tv_search_count.setText(String.valueOf(adapter.getItemCount()));
+                                        Log.d("확인", "확인시간");
+                                        adapter.notifyDataSetChanged();
+
+
                                     }
                                 });
+
+
                             }
                         }).start();
 
@@ -138,20 +187,20 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
 
         boolean urlversion = str.matches("[+-]?\\d*(\\.\\d+)?");
-        Log.d("확인", String.valueOf(urlversion));
-
-
+        Log.d("확인", String.valueOf(urlversion) + str);
         try{
 
             if (urlversion == true) {
 
-                queryUrl2  = "http://apis.data.go.kr/B551182/dgamtCrtrInfoService/getDgamtList?serviceKey=" + key + "&numOfRows=20&pageNo=1&mdsCd=" + str;
-                url= new URL(queryUrl2);//문자열로 된 요청 url을 URL 객체로 생성.
+                queryUrl2  = "http://apis.data.go.kr/B551182/dgamtCrtrInfoService/getDgamtList?serviceKey=" + key + "&numOfRows=10&pageNo=1&mdsCd=" + str;
+                url= new URL(queryUrl2);//숫자열로 된 요청 url을 URL 객체로 생성.
+                Log.d("확인", queryUrl);
 
             } else if (urlversion == false){
 
-                queryUrl ="http://apis.data.go.kr/B551182/dgamtCrtrInfoService/getDgamtList?serviceKey=" + key + "&numOfRows=20&pageNo=1&itmNm=" + str;
+                queryUrl ="http://apis.data.go.kr/B551182/dgamtCrtrInfoService/getDgamtList?serviceKey=" + key + "&numOfRows=10&pageNo=1&itmNm=" + str;
                 url= new URL(queryUrl);//문자열로 된 요청 url을 URL 객체로 생성.
+                Log.d("확인", queryUrl);
             }
 
             InputStream is= url.openStream(); //url위치로 입력스트림 연결
@@ -171,15 +220,12 @@ public class MdPriceResultActivity extends AppCompatActivity {
                 switch( eventType ){
                     case XmlPullParser.START_DOCUMENT:
 
+
                         break;
 
                     case XmlPullParser.START_TAG:
                         tag= xpp.getName();
 
-                        if (tag.equals("/item")){
-                            Log.d("여기","작동");
-                            Toast.makeText(getApplicationContext(),"데이터가없습니다",Toast.LENGTH_LONG).show();
-                        }
 
                         if(tag.equals("item")) ;
                         else if(tag.equals("adtStaDd")){
@@ -217,6 +263,11 @@ public class MdPriceResultActivity extends AppCompatActivity {
                         else if(tag.equals("payTpNm")){
 
                             xpp.next();
+                            if (xpp.getText().equals("삭제")){
+                                Log.d("삭제목록 확인","확인");
+                                list4.add("0");
+                            }
+
 
                         }
                         else if(tag.equals("spcGnlTpNm")){
