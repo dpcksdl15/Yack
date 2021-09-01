@@ -59,6 +59,8 @@ public class MdPriceResultActivity extends AppCompatActivity {
     ArrayList<String> list3 = new ArrayList<>();
     ArrayList<String> list4 = new ArrayList<>();
 
+    InputMethodManager imm;
+    InputMethodManager inputMethodManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +79,15 @@ public class MdPriceResultActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerview) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
 
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("ProgressDialog running...");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
 
         Intent intent = getIntent();
         String search_text = intent.getExtras().getString("md_name");
@@ -95,7 +106,6 @@ public class MdPriceResultActivity extends AppCompatActivity {
                 list4.clear();
 
                 url = null;
-
 
                 getXmlData();
 
@@ -128,14 +138,15 @@ public class MdPriceResultActivity extends AppCompatActivity {
                     case R.id.bt_textcancel_icon:
                         et_search_text.setText("");
                         et_search_text.requestFocus();
-                        InputMethodManager imm = null;
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                            imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        }
+
                         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
                         break;
 
                     case R.id.bt_search_icon:
+
+
+//                        inputMethodManager.hideSoftInputFromWindow(imm.getW,0);
+
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -155,7 +166,6 @@ public class MdPriceResultActivity extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         // 리사이클러뷰에 adapter 객체 지정.
-
 
                                         Adapter adapter = new Adapter(list,list2,list3,list4) ;
                                         recyclerView.setAdapter(adapter) ;
@@ -211,13 +221,18 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
             String tag;
 
+
+
             xpp.next();
 
             int eventType= xpp.getEventType();
 
             while( eventType != XmlPullParser.END_DOCUMENT ){
 
+                int count = 0;
+
                 switch( eventType ){
+
                     case XmlPullParser.START_DOCUMENT:
 
 
@@ -263,7 +278,7 @@ public class MdPriceResultActivity extends AppCompatActivity {
                         else if(tag.equals("payTpNm")){
 
                             xpp.next();
-                            if (xpp.getText().equals("삭제")){
+                            if (xpp.getText().equals("삭제") && list4.get(count) == null){
                                 Log.d("삭제목록 확인","확인");
                                 list4.add("0");
                             }
@@ -275,7 +290,7 @@ public class MdPriceResultActivity extends AppCompatActivity {
                             xpp.next();
 
                         }
-
+                        ++count;
                         break;
 
                     case XmlPullParser.TEXT:
