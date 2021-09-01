@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/icon_x_18" />
     </LinearLayout>
 
-<LinearLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="32dp"
     android:orientation="horizontal"
@@ -47,8 +47,8 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         >
-        <TextView
-            android:id="@+id/textView14"
+        <Spinner
+            android:id="@+id/sp_md_days"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="9.5dp"
@@ -57,7 +57,7 @@
             android:background="@drawable/md_price_search_text"
             android:fontFamily="@font/nr"
             android:textColor="#828282"
-            android:text="복용일수" />
+            android:text="" />
 
 
     </LinearLayout>
@@ -68,8 +68,8 @@
         android:layout_weight="1"
         >
 
-        <TextView
-            android:id="@+id/textView15"
+        <Spinner
+            android:id="@+id/sp_md_day_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="9.5dp"
@@ -77,8 +77,7 @@
             android:layout_marginLeft="6dp"
             android:background="@drawable/md_price_search_text"
             android:fontFamily="@font/nr"
-            android:textColor="#828282"
-            android:text="하루복용횟수" />
+            android:textColor="#828282" />
 
     </LinearLayout>
 
@@ -101,8 +100,8 @@
             android:layout_weight="1"
             >
 
-        <TextView
-            android:id="@+id/textView16"
+        <Spinner
+            android:id="@+id/sp_md_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="9.5dp"
@@ -110,8 +109,7 @@
             android:layout_marginRight="6dp"
             android:background="@drawable/md_price_search_text"
             android:fontFamily="@font/nr"
-            android:textColor="#828282"
-            android:text="1회 투여량" />
+            android:textColor="#828282"/>
 
         </LinearLayout>
 

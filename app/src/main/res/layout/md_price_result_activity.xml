@@ -30,11 +30,11 @@
         <EditText
             android:id="@+id/et_search_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="19dp"
+
             android:inputType="textPersonName"
             android:background="@drawable/md_price_result_text"
             android:textSize="16sp"

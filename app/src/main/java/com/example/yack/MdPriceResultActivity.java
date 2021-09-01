@@ -3,25 +3,18 @@ package com.example.yack;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.yack.R;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -50,7 +43,7 @@ public class MdPriceResultActivity extends AppCompatActivity {
     String queryUrl2;
     String queryUrl;
 
-
+    int count =0;
 
     URL url;
 
@@ -61,6 +54,9 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
     InputMethodManager imm;
     InputMethodManager inputMethodManager;
+
+    RecyclerView recyclerView;
+    AsyncTask asyncTask;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,13 +72,8 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
         tv_search_count = findViewById(R.id.tv_search_count);
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerview) ;
+        recyclerView = findViewById(R.id.recyclerview) ;
         recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
-
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("ProgressDialog running...");
-        progressDialog.setCancelable(true);
-        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -94,35 +85,9 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
         et_search_text.setText(search_text);
 
+        asyncTask = new AsyncTask();
 
-        //검색어 넘어왔을 경우
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                list.clear();
-                list2.clear();
-                list3.clear();
-                list4.clear();
-
-                url = null;
-
-                getXmlData();
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-                        Adapter adapter = new Adapter(list,list2,list3,list4) ;
-                        recyclerView.setAdapter(adapter) ;
-                        tv_search_count.setText(String.valueOf(adapter.getItemCount()));
-                        Log.d("확인", "확인시간");
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            }
-        }).start();
-
+        asyncTask.execute();
 
         cl = new View.OnClickListener() {
             @Override
@@ -143,45 +108,13 @@ public class MdPriceResultActivity extends AppCompatActivity {
                         break;
 
                     case R.id.bt_search_icon:
+                        asyncTask.cancel(true);
 
+                        asyncTask = new AsyncTask();
 
-//                        inputMethodManager.hideSoftInputFromWindow(imm.getW,0);
+                        asyncTask.execute();
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                list.clear();
-                                list2.clear();
-                                list3.clear();
-                                list4.clear();
-
-                                url = null;
-
-
-                                getXmlData();
-
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // 리사이클러뷰에 adapter 객체 지정.
-
-                                        Adapter adapter = new Adapter(list,list2,list3,list4) ;
-                                        recyclerView.setAdapter(adapter) ;
-                                        tv_search_count.setText(String.valueOf(adapter.getItemCount()));
-                                        Log.d("확인", "확인시간");
-                                        adapter.notifyDataSetChanged();
-
-
-                                    }
-                                });
-
-
-                            }
-                        }).start();
-
-
+                        break;
                 }
 
             }
@@ -191,6 +124,60 @@ public class MdPriceResultActivity extends AppCompatActivity {
         bt_cancel_icon.setOnClickListener(cl);
         bt_search_icon.setOnClickListener(cl);
     }
+
+    public class AsyncTask extends android.os.AsyncTask<Void,Void,Void> {
+
+        ProgressDialog mdialog = new ProgressDialog(MdPriceResultActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            mdialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mdialog.setMessage("검색중입니다");
+
+            mdialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            list.clear();
+            list2.clear();
+            list3.clear();
+            list4.clear();
+
+            url = null;
+
+            getXmlData();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
+                    Adapter adapter = new Adapter(list,list2,list3,list4) ;
+                    recyclerView.setAdapter(adapter) ;
+                    tv_search_count.setText(String.valueOf(adapter.getItemCount()));
+                    Log.d("확인", "확인시간");
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            mdialog.dismiss();
+        }
+
+        @Override
+        protected void onCancelled() {
+
+            super.onCancelled();
+            mdialog.cancel();
+        }
+    }
+
 
     public void getXmlData(){
         String str= et_search_text.getText().toString();//EditText에 작성된 Text얻어오기
@@ -221,21 +208,15 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
             String tag;
 
-
-
             xpp.next();
 
             int eventType= xpp.getEventType();
 
             while( eventType != XmlPullParser.END_DOCUMENT ){
 
-                int count = 0;
-
                 switch( eventType ){
 
                     case XmlPullParser.START_DOCUMENT:
-
-
                         break;
 
                     case XmlPullParser.START_TAG:
@@ -272,15 +253,26 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
                             xpp.next();
                             Log.d("확인",xpp.getText());
+                            Log.d("확인2", String.valueOf(count));
                             list4.add(xpp.getText());
 
                         }
                         else if(tag.equals("payTpNm")){
 
                             xpp.next();
-                            if (xpp.getText().equals("삭제") && list4.get(count) == null){
+                            if (xpp.getText().equals("삭제")){
                                 Log.d("삭제목록 확인","확인");
-                                list4.add("0");
+                                try {
+                                    list.remove(count);
+                                    list2.remove(count);
+                                    list3.remove(count);
+                                    list4.remove(count);
+                                }catch (Exception e){
+
+                                }
+
+                            } else {
+                                ++count;
                             }
 
 
@@ -290,7 +282,6 @@ public class MdPriceResultActivity extends AppCompatActivity {
                             xpp.next();
 
                         }
-                        ++count;
                         break;
 
                     case XmlPullParser.TEXT:
@@ -303,6 +294,8 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
                 eventType= xpp.next();
             }
+
+            count =0;
 
         } catch (Exception e){
 
