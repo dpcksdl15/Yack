@@ -136,9 +136,9 @@
 
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/bt_add"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentBottom="true"

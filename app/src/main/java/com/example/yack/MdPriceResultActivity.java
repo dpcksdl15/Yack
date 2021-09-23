@@ -3,18 +3,23 @@ package com.example.yack;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.yack.fragment.FragmentMdPrice;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -22,9 +27,11 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class MdPriceResultActivity extends AppCompatActivity {
+public class MdPriceResultActivity extends AppCompatActivity implements Adapter.OnListItemSelectedInterface{
 
     ImageView bt_back_icon, bt_cancel_icon;
 
@@ -33,6 +40,8 @@ public class MdPriceResultActivity extends AppCompatActivity {
     ImageView bt_search_icon;
 
     TextView tv_search_count;
+
+    Button bt_add;
 
     View.OnClickListener cl;
 
@@ -44,8 +53,12 @@ public class MdPriceResultActivity extends AppCompatActivity {
     String queryUrl;
 
     int count =0;
+    int position = -1;
 
     URL url;
+
+    DBHelper dbHelper;
+    SQLiteDatabase sqLiteDatabase;
 
     ArrayList<String> list = new ArrayList<>();
     ArrayList<String> list2 = new ArrayList<>();
@@ -57,6 +70,10 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     AsyncTask asyncTask;
+
+    Adapter adapter;
+
+    FragmentMdPrice fragmentMdPrice;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,8 +89,15 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
         tv_search_count = findViewById(R.id.tv_search_count);
 
+        bt_add = findViewById(R.id.bt_add);
+
+        adapter = new Adapter(list,list2,list3,list4,this,this,position) ;
+
+        dbHelper = new DBHelper(this,"MdDB",null,1);
+
+
         recyclerView = findViewById(R.id.recyclerview) ;
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)) ;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
@@ -110,9 +134,34 @@ public class MdPriceResultActivity extends AppCompatActivity {
                     case R.id.bt_search_icon:
                         asyncTask.cancel(true);
 
+                        position = -1;
+                        bt_add.setBackgroundResource(R.drawable.md_price_save_button);
+
                         asyncTask = new AsyncTask();
 
                         asyncTask.execute();
+
+                        break;
+
+                    case R.id.bt_add :
+                        //번들객체 생성, text값 저장
+
+                        sqLiteDatabase = dbHelper.getWritableDatabase();
+
+                        String sql;
+
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date date = new Date();
+
+
+                        sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'" +");";
+
+                        sqLiteDatabase.execSQL(sql);
+
+
+
+                         finish();
+
 
                         break;
                 }
@@ -123,6 +172,19 @@ public class MdPriceResultActivity extends AppCompatActivity {
         bt_back_icon.setOnClickListener(cl);
         bt_cancel_icon.setOnClickListener(cl);
         bt_search_icon.setOnClickListener(cl);
+        bt_add.setOnClickListener(cl);
+    }
+
+    @Override
+    public void onItemSelected(View v, int position) {
+        this.position = position;
+
+        if (this.position != -1){
+            Log.d("저장확인 단계", "정상작동");
+            bt_add.setBackgroundResource(R.drawable.md_price_save_button2);
+        }
+
+
     }
 
     public class AsyncTask extends android.os.AsyncTask<Void,Void,Void> {
@@ -153,7 +215,6 @@ public class MdPriceResultActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
-                    Adapter adapter = new Adapter(list,list2,list3,list4) ;
                     recyclerView.setAdapter(adapter) ;
                     tv_search_count.setText(String.valueOf(adapter.getItemCount()));
                     Log.d("확인", "확인시간");
@@ -177,6 +238,7 @@ public class MdPriceResultActivity extends AppCompatActivity {
             mdialog.cancel();
         }
     }
+
 
 
     public void getXmlData(){
@@ -306,4 +368,7 @@ public class MdPriceResultActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }
