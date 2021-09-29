@@ -8,12 +8,20 @@
     android:background="#ffffff"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        >
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:gravity="center"
         >
-
 
         <TextView
             android:id="@+id/textView"
@@ -24,8 +32,22 @@
             android:fontFamily="@font/nr"
             android:text="약가 조회" />
 
-
     </LinearLayout>
+
+        <TextView
+            android:id="@+id/reset"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/nr"
+            android:gravity="center"
+            android:text="전체삭제"
+            android:textColor="#ff1d50"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

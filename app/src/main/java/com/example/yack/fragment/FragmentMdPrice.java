@@ -93,6 +93,7 @@ public class FragmentMdPrice extends Fragment {
 
         Button bt_search = view.findViewById(R.id.bt_search);
         EditText et_md_search_name = view.findViewById(R.id.et_md_search_name);
+        TextView rerset = view.findViewById(R.id.reset);
         tv_count = view.findViewById(R.id.tv_count);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview2);
@@ -118,6 +119,37 @@ public class FragmentMdPrice extends Fragment {
             }
         });
 
+
+        rerset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                try {
+                    sqLiteDatabase = dbHelper.getWritableDatabase();
+
+                    String resetsql = "DELETE FROM searchdata;";
+
+                    sqLiteDatabase.execSQL(resetsql);
+
+                    list.clear();
+                    list2.clear();
+                    list3.clear();
+                    list4.clear();
+
+                    count =0;
+                    priceAdapter = new PriceAdapter(list, list2, list3, list4);
+
+                    recyclerView.setAdapter(priceAdapter);
+
+                    priceAdapter.notifyDataSetChanged();
+
+                } catch (Exception e){
+
+                }
+
+
+            }
+        });
 
         return view;
     }

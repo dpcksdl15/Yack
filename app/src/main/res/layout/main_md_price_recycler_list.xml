@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tv_name_code"
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -22,6 +22,8 @@
             android:fontFamily="@font/neb"
             android:textColor="#404041"
             android:textSize="14sp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="" />
 
         <ImageButton
@@ -33,6 +35,20 @@
             android:backgroundTint="@color/white"
             app:srcCompat="@drawable/icon_x_18" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_code"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:fontFamily="@font/neb"
+        android:textColor="#404041"
+        android:textSize="14sp"
+        />
+
 
     <LinearLayout
     android:layout_width="match_parent"
@@ -51,16 +67,13 @@
         android:layout_weight="1"
         android:layout_marginRight="10dp"
         >
+
         <Spinner
             android:id="@+id/sp_md_days"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:paddingTop="9.5dp"
-            android:paddingLeft="10dp"
             android:background="@drawable/md_price_search_text"
-            android:fontFamily="@font/nr"
-            android:textColor="#828282"
-            android:text="" />
+            android:spinnerMode="dropdown"/>
 
 
     </LinearLayout>
@@ -76,11 +89,8 @@
             android:id="@+id/sp_md_day_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="9.5dp"
-            android:paddingLeft="10dp"
             android:background="@drawable/md_price_search_text"
-            android:fontFamily="@font/nr"
-            android:textColor="#828282" />
+            android:spinnerMode="dropdown"/>
 
     </LinearLayout>
 
@@ -109,11 +119,8 @@
             android:id="@+id/sp_md_count"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:paddingTop="9.5dp"
-            android:paddingLeft="10dp"
             android:background="@drawable/md_price_search_text"
-            android:fontFamily="@font/nr"
-            android:textColor="#828282"/>
+            android:spinnerMode="dropdown"/>
 
         </LinearLayout>
 

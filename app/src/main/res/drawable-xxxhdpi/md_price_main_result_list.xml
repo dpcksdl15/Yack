@@ -4,133 +4,93 @@
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp"/>
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#00dbdbdb" />
+            android:color="#0Ddbdbdb" />
     </shape>
 </item>
 
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp"/>
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#06dbdbdb" />
+            android:color="#0Ddbdbdb" />
     </shape>
 </item>
 
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#09dbdbdb" />
+            android:color="#0Ddbdbdb" />
     </shape>
 </item>
 
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#0bdbdbdb" />
+            android:color="#0Ddbdbdb" />
     </shape>
 </item>
 
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#0ddbdbdb" />
+            android:color="#0Ddbdbdb" />
     </shape>
 </item>
 
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#10dbdbdb" />
+            android:color="#1Adbdbdb" />
     </shape>
 </item>
 
     <!-- Drop Shadow Stack --> <item>
     <shape>
         <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
+            android:top="1dp"
+            android:bottom="1dp"
+            android:left="1dp"
+            android:right="1dp"/>
         <corners android:radius="8dp"/>
         <solid
-            android:color="#12dbdbdb" />
+            android:color="#59dbdbdb" />
     </shape>
 </item>
-
-    <!-- Drop Shadow Stack --> <item>
-    <shape>
-        <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
-        <corners android:radius="8dp"/>
-        <solid
-            android:color="#15dbdbdb" />
-    </shape>
-</item>
-
-    <!-- Drop Shadow Stack --> <item>
-    <shape>
-        <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
-        <corners android:radius="8dp"/>
-        <solid
-            android:color="#17dbdbdb" />
-    </shape>
-</item>
-
-    <!-- Drop Shadow Stack --> <item>
-    <shape>
-        <padding
-            android:top="0.5dp"
-            android:bottom="0.5dp"
-            android:left="0.5dp"
-            android:right="0.5dp" />
-        <corners android:radius="8dp"/>
-        <solid
-            android:color="#1adbdbdb" />
-    </shape>
-</item>
-
 
     <!-- Background -->
 
