@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.yack.fragment.FragmentMain;
 import com.example.yack.fragment.FragmentMdPrice;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     FragmentTransaction transaction;
 
     Menu menu;
+
+    private long backbuttonpress = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +114,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void onBackpressde(){
+        onBackPressed();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (System.currentTimeMillis() > backbuttonpress + 2000 ){
+
+            backbuttonpress = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(), "뒤로가기 버튼을 한번 더 누르시면 종료합니다", Toast.LENGTH_SHORT).show();
+            return;
+
+        } else if (System.currentTimeMillis() <= backbuttonpress + 2000){
+
+            finish();
+
+        }
+//        super.onBackPressed();
     }
 
     public void onFragmentChange(int value){

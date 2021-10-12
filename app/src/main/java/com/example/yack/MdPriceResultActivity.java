@@ -154,11 +154,9 @@ public class MdPriceResultActivity extends AppCompatActivity implements Adapter.
                         Date date = new Date();
 
 
-                        sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'" +");";
+                        sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'"+ "," + "0" + "," + "0" + "," + "0" +");";
 
                         sqLiteDatabase.execSQL(sql);
-
-
 
                          finish();
 

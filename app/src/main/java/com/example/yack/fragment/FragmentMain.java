@@ -3,6 +3,7 @@ package com.example.yack.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -13,16 +14,21 @@ import androidx.fragment.app.Fragment;
 
 import com.example.yack.MainActivity;
 import com.example.yack.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class FragmentMain extends Fragment {
 
     MainActivity mainActivity;
+
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         //현재 소속된 액티비티를 메인 액티비티로 한다.
         mainActivity = (MainActivity) getActivity();
+
+
     }
 
     @Override

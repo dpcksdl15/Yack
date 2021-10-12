@@ -1,15 +1,18 @@
 package com.example.yack;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,7 +30,16 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     //price
     private ArrayList<String> mlist4 = null;
 
-    String[] days_count = {"복용일수", "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일", "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일", "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일", "30일"};
+    private ArrayList<String> mlist5 = null;
+
+    private ArrayList<String> mlist6 = null;
+
+    private ArrayList<String> mlist7 = null;
+
+    DBHelper dbHelper;
+    SQLiteDatabase sqLiteDatabase;
+
+    String[] days_count = {"복용일수", "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일", "11일", "12일", "13일", "14일", "15일", "16~20일", "21~25일", "26~30일", "31~40일", "41~50일", "51~60일", "61~70일", "71~80일", "81~90일", "91일이상"};
     String[] oneday_count = {"하루복용횟수","1회","2회","3회"};
     String[] onetime_count = {"1회투여량","1알","2알","3알","4알","5알","6알","7알","8알","9알","10알"};
 
@@ -35,13 +47,17 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     ArrayAdapter<String> list2_adpter;
     ArrayAdapter<String> list3_adpter;
 
-    public PriceAdapter(ArrayList<String> list, ArrayList<String> list2, ArrayList<String> list3, ArrayList<String> list4){
+
+    public PriceAdapter(ArrayList<String> list, ArrayList<String> list2, ArrayList<String> list3, ArrayList<String> list4, ArrayList<String> countList, ArrayList<String> countList2, ArrayList<String> countList3){
         mlist = list;
         mlist2 = list2;
         mlist3 = list3;
         mlist4 = list4;
+        mlist5 = countList;
+        mlist6 = countList2;
+        mlist7 = countList3;
 
-        Log.d("받은부분", String.valueOf(mlist));
+        Log.d("받은부분", String.valueOf(mlist5));
     }
 
 
@@ -49,6 +65,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
 
         TextView tv_name,tv_code, tv_stdday, tv_price, tv_lis, tv_notlis;
         Spinner sp_md_days, sp_md_day_count, sp_md_count;
+        ImageButton ibt_delete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +79,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             sp_md_days = itemView.findViewById(R.id.sp_md_days);
             sp_md_day_count = itemView.findViewById(R.id.sp_md_day_count);
             sp_md_count = itemView.findViewById(R.id.sp_md_count);
+            ibt_delete = itemView.findViewById(R.id.ibt_delete);
 
             list_adpter  = new ArrayAdapter<String>(itemView.getContext(), R.layout.custom_spiner_item,days_count);
             list2_adpter  = new ArrayAdapter<String>(itemView.getContext(), R.layout.custom_spiner_item,oneday_count);
@@ -76,9 +94,11 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             sp_md_day_count.setAdapter(list2_adpter);
             sp_md_count.setAdapter(list3_adpter);
 
-
         }
+
     }
+
+
 
     @Override
     public int getItemViewType(int position) {
@@ -96,26 +116,90 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
-        String text = mlist.get(position);
-        String text1 = mlist2.get(position);
-        String text2 = mlist3.get(position);
-        String text3 = mlist4.get(position);
+            String text = mlist.get(position);
+            String text1 = mlist2.get(position);
+            String text2 = mlist3.get(position);
+            String text3 = mlist4.get(position);
+            String text4 = mlist5.get(position);
+            String text5 = mlist6.get(position);
+            String text6 = mlist7.get(position);
+
+            holder.tv_name.setText(text);
+            holder.tv_code.setText(text1);
+            holder.tv_stdday.setText(text2);
+            holder.tv_price.setText(text3);
+
+            holder.sp_md_days.setSelection(Integer.parseInt(text4));
+            holder.sp_md_day_count.setSelection(Integer.parseInt(text5));
+            holder.sp_md_count.setSelection(Integer.parseInt(text6));
 
 
-        holder.tv_name.setText(text);
-        holder.tv_code.setText(text1);
-        holder.tv_stdday.setText(text2);
-        holder.tv_price.setText(text3);
+
+
+        dbHelper = new DBHelper(holder.itemView.getContext(), "MdDB",null,1);
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        holder.ibt_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String sql;
+
+                sql = "DELETE FROM searchdata WHERE md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                sqLiteDatabase.execSQL(sql);
+
+                mlist.remove(position);
+                mlist2.remove(position);
+                mlist3.remove(position);
+                mlist4.remove(position);
+                mlist5.remove(position);
+                mlist6.remove(position);
+                mlist7.remove(position);
+
+                notifyItemRemoved(position);
+
+                notifyItemChanged(position);
+            }
+
+        });
+
+
 
         holder.sp_md_days.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                holder.sp_md_days.setSelection(i);
+                if (i != 0) {
 
+                    holder.sp_md_days.setBackgroundResource(R.drawable.md_price_search_text2);
+
+                    String sql;
+
+                    sql = "UPDATE searchdata SET count_day = " + "'" + i + "'" + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                    sqLiteDatabase.execSQL(sql);
+
+                    mlist5.set(position, String.valueOf(i));
+
+                } else if (i == 0){
+
+                    holder.sp_md_days.setBackgroundResource(R.drawable.md_price_search_text);
+
+                    String sql;
+
+                    sql = "UPDATE searchdata SET count_day = " + "'" + i + "'" + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                    sqLiteDatabase.execSQL(sql);
+
+                    mlist5.set(position, String.valueOf(i));
+
+                    holder.sp_md_days.setBackgroundResource(R.drawable.md_price_search_text);
+
+                }
             }
 
             @Override
@@ -124,7 +208,81 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             }
         });
 
+        holder.sp_md_day_count.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+                holder.sp_md_day_count.setSelection(i);
+
+                if (i != 0) {
+
+                    holder.sp_md_day_count.setBackgroundResource(R.drawable.md_price_search_text2);
+
+                    String sql;
+
+                    sql = "UPDATE searchdata SET count_time = " + "'" + i + "'" + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                    sqLiteDatabase.execSQL(sql);
+
+                    mlist6.set(position, String.valueOf(i));
+                } else if (i == 0){
+
+                    holder.sp_md_day_count.setBackgroundResource(R.drawable.md_price_search_text);
+
+                    String sql;
+
+                    sql = "UPDATE searchdata SET count_time = " + "'" + i + "'" + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                    sqLiteDatabase.execSQL(sql);
+
+                    mlist6.set(position, String.valueOf(i));
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        holder.sp_md_count.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                holder.sp_md_count.setSelection(i);
+
+                if (i != 0) {
+
+                    holder.sp_md_count.setBackgroundResource(R.drawable.md_price_search_text2);
+
+                    String sql;
+
+                    sql = "UPDATE searchdata SET count_unit = " + "'" + i + "'" + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                    sqLiteDatabase.execSQL(sql);
+
+                    mlist7.set(position, String.valueOf(i));
+                } else if (i == 0){
+
+                    holder.sp_md_count.setBackgroundResource(R.drawable.md_price_search_text);
+
+                    String sql;
+
+                    sql = "UPDATE searchdata SET count_unit = " + "'" + i + "'" + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                    sqLiteDatabase.execSQL(sql);
+
+                    mlist7.set(position, String.valueOf(i));
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
     }
 

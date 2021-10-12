@@ -7,21 +7,34 @@
     tools:context=".Loding"
     android:orientation="vertical"
     android:background="#067bfe"
-    android:gravity="center"
+
     >
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/loding_logo" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    </LinearLayout>
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        app:srcCompat="@drawable/logo_name" />
+        android:layout_marginBottom="10dp"
+        android:text="Copyright2021. 이블루 All rights reserved."
+        android:fontFamily="@font/nb"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        android:textAlignment="center"/>
+
+
 </LinearLayout>

@@ -174,7 +174,7 @@
 
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tv_total"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textSize="18sp"
@@ -236,20 +236,7 @@
         >
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:textAlignment="center"
-            android:fontFamily="@font/neb"
-            android:textColor="@color/white"
-            android:background="@drawable/md_price_save_button"
-            android:letterSpacing="0.1"
-            android:text="저장하기" />
-
-        <Button
-            android:id="@+id/button3"
+            android:id="@+id/bt_sum"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
