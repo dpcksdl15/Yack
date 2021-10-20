@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                         transaction.replace(R.id.frag_layout, fragmentMain).commitAllowingStateLoss();
                         return true;
 
-
                     case R.id.md_search:
 
                         item.setIcon(R.drawable.nv_bt_1_b);
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.md_consulting).setIcon(R.drawable.nv_bt_4);
                         menu.findItem(R.id.my_info).setIcon(R.drawable.nv_bt_5);
 
+                        Toast.makeText(getApplicationContext(), "추후 오픈될 예정입니다", Toast.LENGTH_SHORT).show();
                         return true;
 
                     case R.id.md_consulting:
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.home).setIcon(R.drawable.nv_bt_3);
                         menu.findItem(R.id.my_info).setIcon(R.drawable.nv_bt_5);
 
+                        Toast.makeText(getApplicationContext(), "추후 오픈될 예정입니다", Toast.LENGTH_SHORT).show();
                         return true;
 
                     case R.id.my_info:
@@ -102,17 +105,20 @@ public class MainActivity extends AppCompatActivity {
                         menu.findItem(R.id.home).setIcon(R.drawable.nv_bt_1);
                         menu.findItem(R.id.home).setIcon(R.drawable.nv_bt_3);
 
+                        Toast.makeText(getApplicationContext(), "추후 오픈될 예정입니다", Toast.LENGTH_SHORT).show();
                         return true;
 
-
                 }
-
-
 
 
                 return true;
             }
         });
+
+        FragmentMdPrice fragmentMdPrice = new FragmentMdPrice();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_SCREEN_ON);
+        registerReceiver(fragmentMdPrice.brod(),intentFilter);
 
     }
 

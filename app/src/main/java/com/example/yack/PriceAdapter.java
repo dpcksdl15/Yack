@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.yack.fragment.FragmentMdPrice;
+
 import java.util.ArrayList;
 
 public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> {
@@ -36,10 +38,23 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
 
     private ArrayList<String> mlist7 = null;
 
+    private ArrayList<Integer> mlist8 = null;
+
+    private ArrayList<String> mlist9 = null;
+
     DBHelper dbHelper;
     SQLiteDatabase sqLiteDatabase;
 
-    String[] days_count = {"복용일수", "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일", "11일", "12일", "13일", "14일", "15일", "16~20일", "21~25일", "26~30일", "31~40일", "41~50일", "51~60일", "61~70일", "71~80일", "81~90일", "91일이상"};
+    String[] days_count = {"복용일수", "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일",
+            "11일", "12일", "13일", "14일", "15일", "16일", "17일", "18일", "19일", "20일",
+            "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일", "30일",
+            "31일", "32일", "33일", "34일", "35일", "36일", "37일", "38일", "39일", "40일",
+            "41일",	"42일",	"43일",	"44일",	"45일",	"46일",	"47일",	"48일",	"49일", "50일",
+            "51일",	"52일",	"53일",	"54일",	"55일",	"56일",	"57일",	"58일",	"59일",	"60일",
+            "61일",	"62일",	"63일",	"64일",	"65일",	"66일",	"67일",	"68일",	"69일",	"70일",
+            "71일",	"72일",	"73일",	"74일",	"75일",	"76일",	"77일",	"78일",	"79일",	"80일",
+            "81일",	"82일",	"83일",	"84일",	"85일",	"86일",	"87일",	"88일",	"89일",	"90일",	"91일"
+    };
     String[] oneday_count = {"하루복용횟수","1회","2회","3회"};
     String[] onetime_count = {"1회투여량","1알","2알","3알","4알","5알","6알","7알","8알","9알","10알"};
 
@@ -47,8 +62,14 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
     ArrayAdapter<String> list2_adpter;
     ArrayAdapter<String> list3_adpter;
 
+    public PriceAdapter(){
 
-    public PriceAdapter(ArrayList<String> list, ArrayList<String> list2, ArrayList<String> list3, ArrayList<String> list4, ArrayList<String> countList, ArrayList<String> countList2, ArrayList<String> countList3){
+        getItemCount();
+    }
+
+
+
+    public PriceAdapter(ArrayList<String> list, ArrayList<String> list2, ArrayList<String> list3, ArrayList<String> list4, ArrayList<String> countList, ArrayList<String> countList2, ArrayList<String> countList3, ArrayList<Integer> list_check){
         mlist = list;
         mlist2 = list2;
         mlist3 = list3;
@@ -56,6 +77,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         mlist5 = countList;
         mlist6 = countList2;
         mlist7 = countList3;
+        mlist8 = list_check;
 
         Log.d("받은부분", String.valueOf(mlist5));
     }
@@ -63,7 +85,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        TextView tv_name,tv_code, tv_stdday, tv_price, tv_lis, tv_notlis;
+        TextView tv_name,tv_code, tv_stdday, tv_price, tv_list, tv_notlist;
         Spinner sp_md_days, sp_md_day_count, sp_md_count;
         ImageButton ibt_delete;
 
@@ -74,8 +96,8 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             tv_code = itemView.findViewById(R.id.tv_code);
             tv_stdday = itemView.findViewById(R.id.tv_stdday);
             tv_price = itemView.findViewById(R.id.tv_price);
-            tv_lis = itemView.findViewById(R.id.tv_lis);
-            tv_notlis = itemView.findViewById(R.id.tv_notlis);
+            tv_list = itemView.findViewById(R.id.tv_list);
+            tv_notlist = itemView.findViewById(R.id.tv_notlist);
             sp_md_days = itemView.findViewById(R.id.sp_md_days);
             sp_md_day_count = itemView.findViewById(R.id.sp_md_day_count);
             sp_md_count = itemView.findViewById(R.id.sp_md_count);
@@ -94,7 +116,9 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             sp_md_day_count.setAdapter(list2_adpter);
             sp_md_count.setAdapter(list3_adpter);
 
+
         }
+
 
     }
 
@@ -115,6 +139,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
         return vh;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
@@ -125,6 +150,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             String text4 = mlist5.get(position);
             String text5 = mlist6.get(position);
             String text6 = mlist7.get(position);
+            int text7 = mlist8.get(position);
 
             holder.tv_name.setText(text);
             holder.tv_code.setText(text1);
@@ -135,11 +161,65 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
             holder.sp_md_day_count.setSelection(Integer.parseInt(text5));
             holder.sp_md_count.setSelection(Integer.parseInt(text6));
 
+            if (text7 == 1){
+                holder.tv_list.setBackgroundResource(R.drawable.md_price_toglebox_left2);
+                holder.tv_list.setTextColor(Color.WHITE);
 
+                holder.tv_notlist.setBackgroundResource(R.drawable.md_price_toglebox_right);
+                holder.tv_notlist.setTextColor(R.color.basic);
+            } else if (text7 == 2){
+                holder.tv_list.setBackgroundResource(R.drawable.md_price_toglebox_left);
+                holder.tv_list.setTextColor(R.color.basic);
+
+                holder.tv_notlist.setBackgroundResource(R.drawable.md_price_toglebox_right2);
+                holder.tv_notlist.setTextColor(Color.WHITE);
+            }
 
 
         dbHelper = new DBHelper(holder.itemView.getContext(), "MdDB",null,1);
         sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        holder.tv_list.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
+
+                String sql;
+
+                sql = "UPDATE searchdata SET md_check = "  + 1  + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                sqLiteDatabase.execSQL(sql);
+
+                mlist8.set(position, 1);
+
+                holder.tv_list.setBackgroundResource(R.drawable.md_price_toglebox_left2);
+                holder.tv_list.setTextColor(Color.WHITE);
+
+                holder.tv_notlist.setBackgroundResource(R.drawable.md_price_toglebox_right);
+                holder.tv_notlist.setTextColor(R.color.basic);
+            }
+        });
+
+        holder.tv_notlist.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onClick(View view) {
+
+                String sql;
+
+                sql = "UPDATE searchdata SET md_check = "  + 2  + " Where md_code = " + "'" + mlist2.get(position) + "'" + ";";
+
+                sqLiteDatabase.execSQL(sql);
+
+                mlist8.set(position, 2);
+
+                holder.tv_list.setBackgroundResource(R.drawable.md_price_toglebox_left);
+                holder.tv_list.setTextColor(R.color.basic);
+
+                holder.tv_notlist.setBackgroundResource(R.drawable.md_price_toglebox_right2);
+                holder.tv_notlist.setTextColor(Color.WHITE);
+            }
+        });
 
         holder.ibt_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,10 +238,15 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
                 mlist5.remove(position);
                 mlist6.remove(position);
                 mlist7.remove(position);
+                mlist8.remove(position);
 
                 notifyItemRemoved(position);
 
                 notifyItemChanged(position);
+
+                FragmentMdPrice fragmentMdPrice = new FragmentMdPrice();
+                fragmentMdPrice.remove(mlist.size());
+
             }
 
         });

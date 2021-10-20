@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -150,13 +152,16 @@ public class MdPriceResultActivity extends AppCompatActivity implements Adapter.
 
                         String sql;
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date date = new Date();
 
+                        try {
+                            sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'" + "," + "0" + "," + "0" + "," + "0" + "," + 1 + ");";
 
-                        sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'"+ "," + "0" + "," + "0" + "," + "0" +");";
+                            sqLiteDatabase.execSQL(sql);
+                        } catch (Exception e){
+                            Toast.makeText(getApplicationContext(), "이미 추가된 약입니다", Toast.LENGTH_SHORT).show();
+                        }
 
-                        sqLiteDatabase.execSQL(sql);
 
                          finish();
 

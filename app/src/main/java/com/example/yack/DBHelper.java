@@ -14,7 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE searchdata (md_name VARCHAR(100), md_code VARCHAR(100), md_stdday VARCHAR(100), md_price VARCHAR(100), save_time date, count_day VARCHAR(100), count_time VARCHAR(100), count_unit VARCHAR(100) )");
+        sqLiteDatabase.execSQL("CREATE TABLE searchdata (md_name VARCHAR(100), md_code VARCHAR(100) PRIMARY KEY, md_stdday VARCHAR(100), md_price VARCHAR(100), save_time date, count_day VARCHAR(100), count_time VARCHAR(100), count_unit VARCHAR(100), md_check INTEGER )");
     }
 
     @Override

@@ -133,20 +133,19 @@
             >
 
         <TextView
-            android:id="@+id/tv_lis"
+            android:id="@+id/tv_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/md_price_toglebox_left"
-            android:backgroundTint="#067bfe"
             android:fontFamily="@font/nb"
-            android:textColor="#ffffff"
+            android:textColor="#067bfe"
             android:textSize="12sp"
             android:text="보험" />
 
             <TextView
-                android:id="@+id/tv_notlis"
+                android:id="@+id/tv_notlist"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

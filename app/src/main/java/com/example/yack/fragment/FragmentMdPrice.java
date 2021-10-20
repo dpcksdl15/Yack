@@ -1,7 +1,9 @@
 package com.example.yack.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -33,7 +35,6 @@ import java.util.ArrayList;
 public class FragmentMdPrice extends Fragment {
 
     MainActivity mainActivity;
-    Bundle bundle;
 
     private RecyclerView recyclerView;
 
@@ -47,12 +48,13 @@ public class FragmentMdPrice extends Fragment {
 
     DBHelper dbHelper;
 
-    String name, code, stdday, price;
-
     TextView tv_count;
 
-    int before_count = 0;
+    static int before_count = 0;
     int count = 0;
+    int on_off = 0;
+
+    int remove_conut = 0;
 
     //name
     private ArrayList<String> list = new ArrayList<>();
@@ -69,7 +71,7 @@ public class FragmentMdPrice extends Fragment {
     //1time unit count
     private ArrayList<String> list7 = new ArrayList<>();
     //Insurance or not Insurance
-    private ArrayList<String> list8 = new ArrayList<>();
+    private ArrayList<Integer> list8 = new ArrayList<>();
 
 
     @Override
@@ -96,29 +98,27 @@ public class FragmentMdPrice extends Fragment {
     }
 
 
-
-
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = (View) inflater.inflate(R.layout.fragment_md_price, container ,false);
-
+        View view = (View) inflater.inflate(R.layout.fragment_md_price, container, false);
         Button bt_search = view.findViewById(R.id.bt_search);
         EditText et_md_search_name = view.findViewById(R.id.et_md_search_name);
         TextView rerset = view.findViewById(R.id.reset);
 
         Button bt_sum = view.findViewById(R.id.bt_sum);
         TextView tv_total = view.findViewById(R.id.tv_total);
+        TextView tv_all_total = view.findViewById(R.id.tv_alltotal);
 
         tv_count = view.findViewById(R.id.tv_count);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview2);
 
-        dbHelper = new DBHelper(getContext(),"MdDB",null,1);
+        dbHelper = new DBHelper(getContext(), "MdDB", null, 1);
 
         bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (et_md_search_name.getText().toString().equals("")){
+                if (et_md_search_name.getText().toString().equals("")) {
 
                     Toast.makeText(getActivity(), "검색어를 입력해 주세요", Toast.LENGTH_LONG).show();
 
@@ -127,6 +127,8 @@ public class FragmentMdPrice extends Fragment {
                     Intent intent = new Intent(getActivity(), MdPriceResultActivity.class);
 
                     intent.putExtra("md_name", et_md_search_name.getText().toString());
+
+                    et_md_search_name.setText("");
 
                     startActivity(intent);
                 }
@@ -137,463 +139,173 @@ public class FragmentMdPrice extends Fragment {
             @Override
             public void onClick(View view) {
 
-                int total =0;
-                int rest =0;
-                int rest1 = 0;
+                int total = 0;
+                int total2 = 0;
 
                 sqLiteDatabase = dbHelper.getReadableDatabase();
 
 
-                String sql,sql2;
+                String sql, sql2;
 
                 sql = "SELECT * FROM searchdata;";
-                Cursor cursor = sqLiteDatabase.rawQuery(sql,null);
+                Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
 
                 while (cursor.moveToNext()) {
-                    if (cursor.getString(5).equals("0") || cursor.getString(6).equals("0") || cursor.getString(7).equals("0")){
+                    if (cursor.getString(5).equals("0") || cursor.getString(6).equals("0") || cursor.getString(7).equals("0")) {
                         Toast.makeText(getActivity(), "복용관련 설정을 완료해주세요", Toast.LENGTH_SHORT).show();
                         break;
-                    } else if (cursor.getString(5).equals("0") == false || cursor.getString(6).equals("0") == false || cursor.getString(7).equals("0") == false){
+                    } else if (cursor.getString(5).equals("0") == false && cursor.getString(6).equals("0") == false && cursor.getString(7).equals("0") == false && cursor.getInt(8) == 1) {
 
-                        total = total + (Integer.parseInt(cursor.getString(3)) *Integer.parseInt(cursor.getString(5)) * Integer.parseInt(cursor.getString(6)) * Integer.parseInt(cursor.getString(7)));
+                        total = total + (Integer.parseInt(cursor.getString(3)) * Integer.parseInt(cursor.getString(5)) * Integer.parseInt(cursor.getString(6)) * Integer.parseInt(cursor.getString(7)));
+
+                    } else if (cursor.getString(5).equals("0") == false && cursor.getString(6).equals("0") == false && cursor.getString(7).equals("0") == false && cursor.getInt(8) == 2) {
+                        total2 = total2 + (Integer.parseInt(cursor.getString(3)) * Integer.parseInt(cursor.getString(5)) * Integer.parseInt(cursor.getString(6)) * Integer.parseInt(cursor.getString(7)));
                     }
                 }
 
                 sql2 = "SELECT * FROM searchdata order by count_day desc limit 1";
 
-                Cursor cursor1 = sqLiteDatabase.rawQuery(sql2,null);
+                Cursor cursor1 = sqLiteDatabase.rawQuery(sql2, null);
 
                 while (cursor1.moveToNext()) {
 
-                    switch (cursor1.getString(5)){
+                    if (Integer.parseInt(cursor1.getString(5)) == 1) {
 
-                        case "1" :
-                            total = total+5290;
+                        total_sum(total, total2, 5290);
 
-                            rest = total%10;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 2) {
 
-                            total = total - rest;
+                        total_sum(total, total2, 5490);
 
-                            total = (int) (total*0.3);
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 3) {
 
-                            rest1 = total%100;
+                        total_sum(total, total2, 6040);
 
-                            total = total - rest1;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 4) {
 
-                            tv_total.setText(String.valueOf(total));
-                            break;
+                        total_sum(total, total2, 6340);
 
-                        case "2":
-                            total = total+5490;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 5) {
 
-                            rest = total%10;
+                        total_sum(total, total2, 6710);
 
-                            total = total - rest;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 6) {
 
-                            total = (int) (total*0.3);
+                        total_sum(total, total2, 7010);
 
-                            rest1 = total%100;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 7) {
 
-                            total = total - rest1;
+                        total_sum(total, total2, 7450);
 
-                            tv_total.setText(String.valueOf(total));
-                            break;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 8) {
 
-                        case "3":
-                            total = total+6040;
+                        total_sum(total, total2, 7650);
 
-                            rest = total%10;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 9) {
 
-                            total = total - rest;
+                        total_sum(total, total2, 7880);
 
-                            total = (int) (total*0.3);
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 10) {
 
-                            rest1 = total%100;
+                        total_sum(total, total2, 8220);
 
-                            total = total - rest1;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 11) {
 
-                            tv_total.setText(String.valueOf(total));
+                        total_sum(total, total2, 8490);
 
-                            break;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 12) {
 
-                        case "4":
-                            total = total+6340;
+                        total_sum(total, total2, 8750);
 
-                            rest = total%10;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 13) {
 
-                            total = total - rest;
+                        total_sum(total, total2, 9010);
 
-                            total = (int) (total*0.3);
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 14) {
 
-                            rest1 = total%100;
+                        total_sum(total, total2, 9860);
 
-                            total = total - rest1;
+                    } else if (Integer.parseInt(cursor1.getString(5)) == 15) {
 
-                            tv_total.setText(String.valueOf(total));
+                        total_sum(total, total2, 9980);
 
-                            break;
+                    } else if (15 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 21) {
 
-                        case "5":
-                            total = total+6710;
+                        total_sum(total, total2, 10700);
 
-                            rest = total%10;
+                    } else if (20 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 26) {
 
-                            total = total - rest;
+                        total_sum(total, total2, 11050);
 
-                            total = (int) (total*0.3);
+                    } else if (25 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 31) {
 
-                            rest1 = total%100;
+                        total_sum(total, total2, 12430);
 
-                            total = total - rest1;
+                    } else if (30 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 41) {
 
-                            tv_total.setText(String.valueOf(total));
+                        total_sum(total, total2, 13460);
 
-                            break;
+                    } else if (40 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 51) {
 
-                        case "6":
-                            total = total+7010;
+                        total_sum(total, total2, 14270);
 
-                            rest = total%10;
+                    } else if (50 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 61) {
 
-                            total = total - rest;
+                        total_sum(total, total2, 16400);
 
-                            total = (int) (total*0.3);
+                    } else if (60 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 71) {
 
-                            rest1 = total%100;
+                        total_sum(total, total2, 16850);
 
-                            total = total - rest1;
+                    } else if (70 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 81) {
 
-                            tv_total.setText(String.valueOf(total));
+                        total_sum(total, total2, 17240);
 
-                            break;
+                    } else if (80 < Integer.parseInt(cursor1.getString(5)) && Integer.parseInt(cursor1.getString(5)) < 91) {
 
-                        case "7":
-                            total = total+7450;
+                        total_sum(total, total2, 17620);
 
-                            rest = total%10;
+                    } else if (90 < Integer.parseInt(cursor1.getString(5))) {
 
-                            total = total - rest;
+                        total_sum(total, total2, 18080);
 
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "8":
-                            total = total+7650;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "9":
-                            total = total+7880;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "10":
-                            total = total+8220;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "11":
-                            total = total+8490;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "12":
-                            total = total+8750;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "13":
-                            total = total+9010;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "14":
-                            total = total+9860;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "15":
-                            total = total+9980;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "16":
-                            total = total+10700;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "17":
-                            total = total+11050;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "18":
-                            total = total+12430;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "19":
-                            total = total+13460;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "20":
-                            total = total+14270;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "21":
-                            total = total+16400;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "22":
-                            total = total+16850;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "23":
-                            total = total+17240;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "24":
-                            total = total+17620;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
-
-                        case "25":
-                            total = total+18080;
-
-                            rest = total%10;
-
-                            total = total - rest;
-
-                            total = (int) (total*0.3);
-
-                            rest1 = total%100;
-
-                            total = total - rest1;
-
-                            tv_total.setText(String.valueOf(total));
-
-                            break;
                     }
+
                 }
 
+            }
 
+            public void total_sum(int to, int to2, int jojebi) {
+                int all_total = 0;
+                int total = to;
+                int total2 = to2;
+                int rest = 0;
+                int rest1 = 0;
+                int joje = jojebi;
 
+                if (total != 0) {
+                    total = total + joje;
+
+                    all_total = all_total + total;
+
+                    rest = total % 10;
+
+                    total = total - rest;
+
+                    total = (int) (total * 0.3);
+
+                    rest1 = total % 100;
+
+                    total = total - rest1 + total2;
+
+                    all_total = all_total + total2;
+                } else if (total == 0) {
+                    total = total + total2 + joje;
+                    all_total = all_total + total;
+                }
+
+                tv_total.setText(String.valueOf(total));
+                tv_all_total.setText(String.valueOf(all_total));
             }
         });
 
@@ -616,15 +328,16 @@ public class FragmentMdPrice extends Fragment {
                     list5.clear();
                     list6.clear();
                     list7.clear();
+                    list8.clear();
 
-                    count =0;
-                    priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7);
+                    count = 0;
+                    priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7, list8);
 
                     recyclerView.setAdapter(priceAdapter);
 
                     priceAdapter.notifyDataSetChanged();
 
-                } catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
@@ -636,13 +349,24 @@ public class FragmentMdPrice extends Fragment {
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("다시 실행","싫행");
-
+        Log.d("다시 실행", "싫행");
+        IntentFilter filter = new IntentFilter();
         DataRefresh();
+    }
+
+    public BroadcastReceiver brod(){
+    BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+                on_off = 1;
+            }
+        }
+    };
+        return br;
     }
 
     public void DataRefresh(){
@@ -651,6 +375,7 @@ public class FragmentMdPrice extends Fragment {
 
 
         try {
+
             sqLiteDatabase = dbHelper.getReadableDatabase();
 
             String sql, sql2;
@@ -658,10 +383,11 @@ public class FragmentMdPrice extends Fragment {
             sql = "SELECT * FROM searchdata;";
             Cursor cursor = sqLiteDatabase.rawQuery(sql,null);
 
-            if (cursor.getCount() <= before_count){
-                before_count = cursor.getCount();
-            }
+            tv_count.setText("총 " + cursor.getCount() +"개");
 
+            Log.d("다시 실행2 c", String.valueOf(cursor.getCount()));
+            Log.d("다시 실행2 b", String.valueOf(before_count));
+            Log.d("다시 실행2", String.valueOf(list));
 
             if (cursor.getCount() > 0 && count == 0){
 
@@ -677,13 +403,14 @@ public class FragmentMdPrice extends Fragment {
                     list5.add(cursor.getString(5));
                     list6.add(cursor.getString(6));
                     list7.add(cursor.getString(7));
+                    list8.add(cursor.getInt(8));
                 }
                 count = 1;
 
                 mlayoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(mlayoutManager);
 
-                priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7);
+                priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7, list8);
 
                 Log.d("DataRefresh1",String.valueOf(list.get(0)));
                 Log.d("DataRefresh1",String.valueOf(before_count));
@@ -691,9 +418,24 @@ public class FragmentMdPrice extends Fragment {
                 recyclerView.setAdapter(priceAdapter);
                 priceAdapter.notifyDataSetChanged();
 
-            } else if (cursor.getCount() >= before_count && count == 1){
+            } else if(cursor.getCount() == before_count){
 
-                Log.d("DataRefresh2","실행");
+                    recyclerView.removeAllViewsInLayout();
+
+                    mlayoutManager = new LinearLayoutManager(getContext());
+                    recyclerView.setLayoutManager(mlayoutManager);
+
+                    priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7, list8);
+
+                    Log.d("DataRefresh2", String.valueOf(list.get(0)));
+                    Log.d("DataRefresh2", String.valueOf(before_count));
+
+                    recyclerView.setAdapter(priceAdapter);
+                    priceAdapter.notifyDataSetChanged();
+
+            } else if (cursor.getCount() > before_count && count == 1 || cursor.getCount() < before_count && count == 1){
+
+                Log.d("DataRefresh3","실행");
 
                 sql2 = "SELECT * FROM searchdata ORDER BY save_time DESC LIMIT 1;";
                 Cursor cursor2 = sqLiteDatabase.rawQuery(sql2,null);
@@ -708,22 +450,29 @@ public class FragmentMdPrice extends Fragment {
                     list5.add(cursor2.getString(5));
                     list6.add(cursor2.getString(6));
                     list7.add(cursor2.getString(7));
+                    list8.add(cursor2.getInt(8));
                 }
 
                 mlayoutManager = new LinearLayoutManager(getContext());
                 recyclerView.setLayoutManager(mlayoutManager);
 
-                priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7);
+                priceAdapter = new PriceAdapter(list, list2, list3, list4, list5, list6, list7, list8);
 
-                Log.d("DataRefresh2",String.valueOf(cursor2.getString(0)));
-                Log.d("DataRefresh2",String.valueOf(before_count));
+                Log.d("DataRefresh3",String.valueOf(cursor2.getString(0)));
+                Log.d("DataRefresh3",String.valueOf(before_count));
 
                 recyclerView.setAdapter(priceAdapter);
                 priceAdapter.notifyItemChanged(before_count);
 
+                remove_conut = 0;
+
+                priceAdapter.notifyDataSetChanged();
             }
 
-            tv_count.setText("총 " + before_count +"개");
+            Log.d("다시 실행", String.valueOf(before_count));
+            Log.d("다시 실행", String.valueOf(cursor.getCount()));
+            Log.d("다시 실행", String.valueOf(count));
+            Log.d("다시 실행", String.valueOf(list));
             Log.d("다시 실행","싫행 종료");
 
 
@@ -731,9 +480,11 @@ public class FragmentMdPrice extends Fragment {
 
         }
 
-
-
     }
 
+    public void remove(int a){
+        before_count = a;
+        Log.d("다시 실행", String.valueOf(before_count));
+    }
 
 }
