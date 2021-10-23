@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,9 +16,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.yack.MainActivity;
+import com.example.yack.MdSearch2Activity;
 import com.example.yack.MdSearchActivity;
+import com.example.yack.Provision2Activity;
+import com.example.yack.ProvisionActivity;
 import com.example.yack.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.w3c.dom.Text;
 
 public class FragmentMain extends Fragment {
 
@@ -49,6 +55,9 @@ public class FragmentMain extends Fragment {
         ImageButton ph_pt_community = view.findViewById(R.id.ph_pt_community);
         ImageButton mypage = view.findViewById(R.id.mypage);
 
+        TextView tv_service = view.findViewById(R.id.tv_service);
+        TextView tv_data = view.findViewById(R.id.tv_data);
+
         ibt_md_price_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +71,7 @@ public class FragmentMain extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(getActivity(), MdSearchActivity.class);
+                Intent intent = new Intent(getActivity(), MdSearch2Activity.class);
                 startActivity(intent);
 
             }
@@ -93,6 +102,22 @@ public class FragmentMain extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "추후 오픈될 예정입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        tv_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProvisionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        tv_data.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), Provision2Activity.class);
+                startActivity(intent);
             }
         });
 

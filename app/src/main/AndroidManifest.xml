@@ -14,11 +14,15 @@
         android:theme="@style/Theme.Yack"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MdSearchActivity"
+            android:name=".Provision2Activity"
+            android:exported="true"
+            />
+        <activity
+            android:name=".ProvisionActivity"
             android:exported="true" />
         <activity
             android:name=".test"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Loding"
             android:exported="true">
@@ -30,8 +34,9 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity android:name=".MdPriceResultActivity" />
+        <activity android:name=".MdSearch2Activity" />
     </application>
 
 </manifest>
