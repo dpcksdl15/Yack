@@ -77,6 +77,8 @@ public class MdPriceResultActivity extends AppCompatActivity implements Adapter.
 
     FragmentMdPrice fragmentMdPrice;
 
+    int click_check =0;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,17 +156,22 @@ public class MdPriceResultActivity extends AppCompatActivity implements Adapter.
 
                         Date date = new Date();
 
-                        try {
-                            sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'" + "," + "0" + "," + "0" + "," + "0" + "," + 0 + ");";
+                        if (click_check == 1) {
 
-                            sqLiteDatabase.execSQL(sql);
-                        } catch (Exception e){
-                            Toast.makeText(getApplicationContext(), "이미 추가된 약입니다", Toast.LENGTH_SHORT).show();
+                            try {
+                                sql = "INSERT INTO searchdata VALUES (" + "'" + list.get(position) + "'" + "," + "'" + list2.get(position) + "'" + "," + "'" + list3.get(position) + "'" + "," + "'" + list4.get(position) + "'" + "," + "'" + date + "'" + "," + "0" + "," + "0" + "," + "0" + "," + 0 + ");";
+
+                                sqLiteDatabase.execSQL(sql);
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), "이미 추가된 약입니다", Toast.LENGTH_SHORT).show();
+                            }
+
+
+                            finish();
+                        } else {
+
+                            Toast.makeText(getApplicationContext(), "아직 약이 선택 되지 않았습니다.", Toast.LENGTH_SHORT).show();
                         }
-
-
-                         finish();
-
 
                         break;
                 }
@@ -185,6 +192,7 @@ public class MdPriceResultActivity extends AppCompatActivity implements Adapter.
         if (this.position != -1){
             Log.d("저장확인 단계", "정상작동");
             bt_add.setBackgroundResource(R.drawable.md_price_save_button2);
+            click_check =1;
         }
 
 

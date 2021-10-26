@@ -3,6 +3,7 @@ package com.example.yack;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,13 +33,18 @@ public class MdSearch2Adpter extends RecyclerView.Adapter<MdSearch2Adpter.ViewHo
     //이미지
     private ArrayList<Bitmap> mlist4 = null;
 
-    Context context;
-    List<Item> items;
+    Context mcontext;
 
-    public MdSearch2Adpter(Context context, List<Item> Items){
-        this.context = context;
-        this.items = Items;
+    private int click_position = -1;
 
+    private OnListItemSelectedInterface mListener = null;
+
+    public interface OnListItemSelectedInterface {
+        void onItemSelected(View v, int position);
+    }
+
+    public  void  setOnClickListener(OnListItemSelectedInterface listener){
+        this.mListener = listener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -49,13 +58,18 @@ public class MdSearch2Adpter extends RecyclerView.Adapter<MdSearch2Adpter.ViewHo
             tv_md_name = itemView.findViewById(R.id.tv_md_name);
             tv_md_code= itemView.findViewById(R.id.tv_md_code);
             tv_md_comp = itemView.findViewById(R.id.tv_md_comp);
+            imageView = itemView.findViewById(R.id.imgv);
 
-        }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        public void setImageView(String url){
-            imageView = itemView.findViewById(R.id.imageView);
-            Glide.with(context).load(url).into(imageView);
+                    click_position = getAdapterPosition();
 
+                    mListener.onItemSelected(view,click_position);
+                    Log.d("클릭", "클릭");
+                }
+            });
         }
 
     }
@@ -88,21 +102,18 @@ public class MdSearch2Adpter extends RecyclerView.Adapter<MdSearch2Adpter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Log.d("받은부분2", String.valueOf(mlist));
-
         String text = mlist.get(position);
         String text2 = mlist2.get(position);
         String text3 = mlist3.get(position);
-        Bitmap text4 = mlist4.get(position);
+        Bitmap bitmap = mlist4.get(position);
 
         holder.tv_md_name.setText(text2);
         holder.tv_md_code.setText(text);
         holder.tv_md_comp.setText(text3);
-
-        Item item = items.get(position);
-        holder.setImageView(item.getUrl());
+        holder.imageView.setImageBitmap(bitmap);
 
     }
+
 
     @Override
     public int getItemViewType(int position) {

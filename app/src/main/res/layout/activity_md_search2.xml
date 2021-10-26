@@ -44,20 +44,18 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-
             android:gravity="center">
 
 
             <TextView
-                android:id="@+id/bt_search_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="15dp"
-                android:layout_marginRight="17dp"
+                android:id="@+id/bt_search_clear"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
                 android:gravity="center"
                 android:textSize="12sp"
                 android:textColor="#ff1d50"
                 android:fontFamily="@font/nr"
-                android:text="초기화"
+                android:text=""
                 />
         </LinearLayout>
 
@@ -104,6 +102,23 @@
             android:text="검색" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="16dp"
+        android:background="#19d8d8d8">
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:fontFamily="@font/nb"
+            android:text="" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/non_list"

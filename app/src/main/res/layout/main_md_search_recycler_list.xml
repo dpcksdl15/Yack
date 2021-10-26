@@ -13,12 +13,14 @@
 
     <LinearLayout
         android:layout_width="146dp"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/imageview"
+            android:id="@+id/imgv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/md_search_result_list"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -26,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:layout_weight="1"
         android:layout_marginLeft="16dp"
         android:orientation="vertical"
@@ -35,8 +37,9 @@
         <TextView
             android:id="@+id/tv_md_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_height="16dp"
+            android:layout_marginTop="20dp"
+            android:paddingRight="12dp"
             android:gravity="center"
             android:textAlignment="viewEnd"
             android:fontFamily="@font/neb"
@@ -52,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_weight="1"
+                android:paddingRight="12dp"
                 android:gravity="center"
                 android:textAlignment="viewEnd"
                 android:fontFamily="@font/nb"
@@ -66,9 +69,10 @@
                 <TextView
                     android:id="@+id/tv_md_comp"
                     android:layout_width="match_parent"
-                    android:layout_height="13dp"
+                    android:layout_height="14dp"
                     android:layout_marginTop="8dp"
-                    android:layout_weight="1"
+                    android:layout_marginBottom="20dp"
+                    android:paddingRight="12dp"
                     android:gravity="center"
                     android:textAlignment="viewEnd"
                     android:fontFamily="@font/nb"

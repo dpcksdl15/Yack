@@ -31,7 +31,7 @@
             android:textSize="16sp"
             android:textColor="#404041"
             android:fontFamily="@font/nr"
-            android:text="약가 조회" />
+            android:text="약가 계산" />
 
     </LinearLayout>
 
@@ -288,6 +288,7 @@
                 android:fontFamily="@font/neb"
                 android:text="계산하기"
                 android:textAlignment="center"
+                android:letterSpacing="0.1"
                 android:textColor="@color/white" />
 
 

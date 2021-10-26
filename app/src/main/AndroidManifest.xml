@@ -14,9 +14,11 @@
         android:theme="@style/Theme.Yack"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MdSearchResultActivity"
+            android:exported="true" />
+        <activity
             android:name=".Provision2Activity"
-            android:exported="true"
-            />
+            android:exported="true" />
         <activity
             android:name=".ProvisionActivity"
             android:exported="true" />

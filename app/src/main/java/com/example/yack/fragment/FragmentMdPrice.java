@@ -337,6 +337,8 @@ public class FragmentMdPrice extends Fragment {
 
                     priceAdapter.notifyDataSetChanged();
 
+                    tv_count.setText("총 " + list.size() +"개");
+
                 } catch (Exception e) {
 
                 }
