@@ -25,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,9 +64,11 @@ public class MdSearch2Activity extends AppCompatActivity {
     String key="%2FRj6PnwSChD5W2Md24QgSzON59%2FhVEEUaGNz6Wqatzinv3ynhtlm6Wj5ltMVE3pywr3aDojSz8%2BMNCTzeKbMzg%3D%3D";
 
     URL url;
+    URL url2;
 
     String queryUrl;
     String queryUrl2;
+    String queryUrl3;
 
     int position = -1;
 
@@ -202,14 +205,14 @@ public class MdSearch2Activity extends AppCompatActivity {
             if (urlversion == false) {
 
                 //숫자열로 된 요청 url을 URL 객체로 생성.
-                queryUrl  = "http://apis.data.go.kr/1470000/MdcinGrnIdntfcInfoService/getMdcinGrnIdntfcInfoList?serviceKey=" + key + "&numOfRows=10&pageNo=1&item_name=" + str;
+                queryUrl  = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?serviceKey=" + key + "&numOfRows=10&pageNo=1&itemName=" + str;
                 url= new URL(queryUrl);
                 Log.d("확인", queryUrl);
 
             } else if (urlversion == true){
 
                 //문자열로 된 요청 url을 URL 객체로 생성.
-                queryUrl2 ="http://apis.data.go.kr/1470000/MdcinGrnIdntfcInfoService/getMdcinGrnIdntfcInfoList?serviceKey=" + key + "&numOfRows=10&pageNo=1&edi_code=" + str;
+                queryUrl2 ="http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList?serviceKey=" + key + "&numOfRows=10&pageNo=1&itemSeq=" + str;
                 url= new URL(queryUrl2);
                 Log.d("확인", queryUrl2);
             }
@@ -240,32 +243,25 @@ public class MdSearch2Activity extends AppCompatActivity {
 
 
                         if(tag.equals("item")) ;
-                        else if(tag.equals("ITEM_SEQ")){
+                        else if(tag.equals("itemSeq")){
 
                             xpp.next();
                             Log.d("확인",xpp.getText());
                             list.add(xpp.getText());
 
                         }
-                        else if(tag.equals("ITEM_NAME")){
+                        else if(tag.equals("itemName")){
 
                             xpp.next();
                             Log.d("확인",xpp.getText());
                             list2.add(xpp.getText());
 
                         }
-                        else if(tag.equals("ENTP_NAME")){
+                        else if(tag.equals("entpName")){
 
                             xpp.next();
                             Log.d("확인",xpp.getText());
                             list3.add(xpp.getText());
-
-                        }
-                        else if(tag.equals("ITEM_IMAGE")){
-
-                            xpp.next();
-                            Log.d("확인",xpp.getText());
-                            list5.add(xpp.getText());
 
                         }
                         break;
@@ -281,6 +277,70 @@ public class MdSearch2Activity extends AppCompatActivity {
                 eventType= xpp.next();
             }
 
+
+            is.close();
+            getXmlImage();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void getXmlImage(){
+
+        try {
+            for (int i =0 ; list.size() > i ; i++) {
+                queryUrl3 = "http://apis.data.go.kr/1470000/MdcinGrnIdntfcInfoService/getMdcinGrnIdntfcInfoList?serviceKey=" + key + "&numOfRows=10&pageNo=1&ITEM_SEQ=" + list.get(i);
+                url2 = new URL(queryUrl3);
+                Log.d("확인", queryUrl3);
+
+                //url위치로 입력스트림 연결
+                InputStream is = url2.openStream();
+
+                //xml파싱
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                XmlPullParser xpp = factory.newPullParser();
+                xpp.setInput(new InputStreamReader(is, "UTF-8"));
+
+                String tag;
+
+                xpp.next();
+
+                int eventType = xpp.getEventType();
+
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+
+                    switch (eventType) {
+
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
+
+                        case XmlPullParser.START_TAG:
+                            tag = xpp.getName();
+
+
+                            if (tag.equals("item")) ;
+                            else if (tag.equals("ITEM_IMAGE")) {
+
+                                xpp.next();
+                                Log.d("확인", xpp.getText());
+                                list5.add(xpp.getText());
+                            }
+
+                        case XmlPullParser.TEXT:
+                            break;
+
+                        case XmlPullParser.END_TAG:
+                            tag = xpp.getName();
+
+                    }
+
+                    eventType = xpp.next();
+                }
+
+                is.close();
+            }
+
             if (list5.size() != 0) {
                 Log.d("확인", "실행");
                 for (int i =0 ; list5.size() > i ; i++) {
@@ -289,12 +349,9 @@ public class MdSearch2Activity extends AppCompatActivity {
                 }
             }
 
-            is.close();
-
         } catch (Exception e){
             e.printStackTrace();
         }
-
 
     }
 

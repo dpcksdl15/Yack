@@ -48,7 +48,9 @@ public class FragmentMdPrice extends Fragment {
 
     DBHelper dbHelper;
 
-    TextView tv_count;
+    static TextView tv_count;
+    static TextView tv_total;
+    static TextView tv_all_total;
 
     static int before_count = 0;
     int count = 0;
@@ -105,8 +107,8 @@ public class FragmentMdPrice extends Fragment {
         TextView rerset = view.findViewById(R.id.reset);
 
         Button bt_sum = view.findViewById(R.id.bt_sum);
-        TextView tv_total = view.findViewById(R.id.tv_total);
-        TextView tv_all_total = view.findViewById(R.id.tv_alltotal);
+        tv_total = view.findViewById(R.id.tv_total);
+        tv_all_total = view.findViewById(R.id.tv_alltotal);
 
         tv_count = view.findViewById(R.id.tv_count);
 
@@ -487,6 +489,12 @@ public class FragmentMdPrice extends Fragment {
     public void remove(int a){
         before_count = a;
         Log.d("다시 실행", String.valueOf(before_count));
+
+        tv_count.setText("총 " + before_count +"개");
+
+        tv_total.setText(String.valueOf(0));
+        tv_all_total.setText(String.valueOf(0));
     }
+
 
 }

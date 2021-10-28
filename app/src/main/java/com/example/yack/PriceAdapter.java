@@ -247,6 +247,7 @@ public class PriceAdapter extends RecyclerView.Adapter<PriceAdapter.ViewHolder> 
                 FragmentMdPrice fragmentMdPrice = new FragmentMdPrice();
                 fragmentMdPrice.remove(mlist.size());
 
+
             }
 
         });

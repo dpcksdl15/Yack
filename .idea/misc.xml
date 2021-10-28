@@ -46,7 +46,7 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_md_price.xml" value="0.2" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_md_price_result.xml" value="0.2" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_second.xml" value="0.19010416666666666" />
-        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_md_price_recycler_list.xml" value="0.2" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_md_price_recycler_list.xml" value="0.5" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_md_search_recycler_list.xml" value="0.4452773613193403" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_recycler_list.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/md_price_result_activity.xml" value="0.18" />
@@ -57,6 +57,9 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_main.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_main_round.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_yak_icon.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_yak_icon_round.xml" value="0.20208333333333334" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_yak_round.xml" value="0.20208333333333334" />
       </map>
     </option>
   </component>
