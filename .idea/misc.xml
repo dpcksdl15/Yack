@@ -7,6 +7,7 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shadow_bottom.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shadow_top.xml" value="0.67" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shdow.xml" value="0.35625" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21875" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/md_price_result_list.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/main_background.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/main_button_backgound.xml" value="1.5" />
@@ -42,6 +43,7 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/content_provision2.xml" value="0.1796875" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/custom_spiner_item.xml" value="0.2383879781420765" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/custom_spiner_item2.xml" value="0.5" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_first.xml" value="0.18177083333333333" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_main.xml" value="0.22" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_md_price.xml" value="0.2" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_md_price_result.xml" value="0.2" />
