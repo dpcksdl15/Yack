@@ -3,12 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-hdpi/background_main_covid.xml" value="0.21875" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shadow.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shadow_bottom.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shadow_top.xml" value="0.67" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/box_shdow.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.21875" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-v24/md_price_result_list.xml" value="0.35625" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/backgound_md_price_result_list.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/backgound_md_price_search_button.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/backgound_md_price_search_text.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/backgound_receive_main_top1.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/backgound_receive_main_top2.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/background_date_seq.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/background_login_button.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/background_login_button_b.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/background_login_text.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/background_mdprice_recyclerview.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/box_shadow_bottom.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/box_shadow_top.xml" value="0.378125" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxhdpi/dotted_line_horizontal.xml" value="0.378125" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/main_background.xml" value="0.35625" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/main_button_backgound.xml" value="1.5" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/md_price_main_result_list.xml" value="0.67" />
@@ -16,6 +30,7 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/md_price_search_text2.xml" value="0.155859375" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/md_search_result_list.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable-xxxhdpi/select_bottom_icon_color.xml" value="0.35625" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/background_main_covid.xml" value="0.2125" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/basic_button_color.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/ll_type.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/ll_type2.xml" value="0.22135416666666666" />
@@ -32,11 +47,18 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/md_search_result_list.xml" value="0.17708333333333334" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/search_icon.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/drawable/search_icon_color.xml" value="0.19895833333333332" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_firstmain.xml" value="0.22" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_loding.xml" value="0.14" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_login.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_md_price.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_md_price_result.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_md_search.xml" value="0.25" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_md_search2.xml" value="0.25" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_md_search_result.xml" value="0.33" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_membership.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_pm_receive.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_pm_receive_detail.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_provision.xml" value="0.2127003699136868" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_provision2.xml" value="0.22" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/activity_test.xml" value="0.16458333333333333" />
@@ -50,11 +72,16 @@
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/fragment_second.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_md_price_recycler_list.xml" value="0.5" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_md_search_recycler_list.xml" value="0.4452773613193403" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_navi_header.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/main_recycler_list.xml" value="0.16458333333333333" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/md_price_result_activity.xml" value="0.18" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/md_search_main_recycler_list.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/recycler_list.xml" value="0.25" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/sub_md_price_recycler_list.xml" value="0.32518115942028986" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/layout/viewpage.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/menu/bottom_menu.xml" value="0.3359375" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/menu/busan_context_menu.xml" value="0.3619791666666667" />
+        <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/menu/sejoeng_context_menu.xml" value="0.3619791666666667" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.18489583333333334" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19895833333333332" />
         <entry key="..\:/Users/eu101/AndroidStudioProjects/Yack/app/src/main/res/mipmap-anydpi-v26/ic_main.xml" value="0.19895833333333332" />

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,18 +16,6 @@
         android:theme="@style/Theme.Yack"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MdSearchResultActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Provision2Activity"
-            android:exported="true" />
-        <activity
-            android:name=".ProvisionActivity"
-            android:exported="true" />
-        <activity
-            android:name=".test"
-            android:exported="true" />
-        <activity
             android:name=".Loding"
             android:exported="true">
             <intent-filter>
@@ -35,10 +25,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".FirstMainActivity"
             android:exported="true" />
-        <activity android:name=".MdPriceResultActivity" />
-        <activity android:name=".MdSearch2Activity" />
+        <activity
+            android:name=".MembershipFinshActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MembershipActivity"
+            android:exported="true">
+
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MdPriceResultActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MdPriceActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".MdSearchActivity"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity android:name=".MdSearchResultActivity" />
+        <activity android:name=".ProvisionActivity" />
+        <activity android:name=".Provision2Activity" />
     </application>
 
 </manifest>
