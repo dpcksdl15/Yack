@@ -280,9 +280,26 @@
                             android:id="@+id/bt_first_main_button_3"
                             android:layout_width="match_parent"
                             android:layout_height="151dp"
-                            android:src="@drawable/main_button_3"
+                            android:src="@drawable/d"
                             android:scaleType="fitXY"
                             />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="20dp"
+                        >
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewpager_first_main"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                        </androidx.viewpager2.widget.ViewPager2>
 
                     </LinearLayout>
 
@@ -323,23 +340,7 @@
 
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:layout_weight="1"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="56dp"
-                        >
 
-                        <androidx.viewpager2.widget.ViewPager2
-                            android:id="@+id/viewpager_first_main"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal">
-
-                        </androidx.viewpager2.widget.ViewPager2>
-
-                    </LinearLayout>
 
                 </LinearLayout>
 
