@@ -274,14 +274,27 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="20dp"
                         android:layout_weight="2"
+                        android:orientation="horizontal"
                         >
 
                         <ImageView
-                            android:id="@+id/bt_first_main_button_3"
+                            android:id="@+id/bt_main_sellCheck"
+                            android:layout_width="match_parent"
+                            android:layout_marginRight="5dp"
+                            android:layout_height="151dp"
+                            android:src="@drawable/button_salecheck"
+                            android:scaleType="fitXY"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            android:id="@+id/bt_main_medicineCheck"
                             android:layout_width="match_parent"
                             android:layout_height="151dp"
-                            android:src="@drawable/d"
+                            android:layout_marginLeft="5dp"
+                            android:src="@drawable/button_healthcare"
                             android:scaleType="fitXY"
+                            android:layout_weight="1"
                             />
 
                     </LinearLayout>
@@ -312,7 +325,7 @@
                         >
 
                         <ImageView
-                            android:id="@+id/bt_first_main_button_1"
+                            android:id="@+id/bt_main_MedicineSearch"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/main_button_1"
@@ -329,7 +342,7 @@
                         >
 
                         <ImageView
-                            android:id="@+id/bt_first_main_button_2"
+                            android:id="@+id/bt_main_medicinePrice"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:src="@drawable/main_button_2"
@@ -337,10 +350,6 @@
                             />
 
                     </LinearLayout>
-
-
-
-
 
                 </LinearLayout>
 

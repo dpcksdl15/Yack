@@ -44,7 +44,7 @@ public class FirstMainActivity extends AppCompatActivity {
 
     ViewPager2 viewPager;
 
-    ImageView bt_button1, bt_button2, bt_button3, bt_mypage;
+    ImageView bt_main_MedicineSearch, bt_main_MedicinePrice, bt_main_medicineCheck,bt_main_SellCheck, bt_mypage;
 
     DrawerLayout drawerLayout;
 
@@ -106,9 +106,10 @@ public class FirstMainActivity extends AppCompatActivity {
 
         firstmain = FirstMainActivity.this;
 
-        bt_button1 = findViewById(R.id.bt_first_main_button_1);
-        bt_button2 = findViewById(R.id.bt_first_main_button_2);
-        bt_button3 = findViewById(R.id.bt_first_main_button_3);
+        bt_main_MedicineSearch = findViewById(R.id.bt_main_MedicineSearch);
+        bt_main_MedicinePrice = findViewById(R.id.bt_main_medicinePrice);
+        bt_main_medicineCheck = findViewById(R.id.bt_main_medicineCheck);
+        bt_main_SellCheck = findViewById(R.id.bt_main_sellCheck);
         bt_mypage = findViewById(R.id.imgv_main_mypage);
 
         tv_service = findViewById(R.id.tv_service);
@@ -142,14 +143,18 @@ public class FirstMainActivity extends AppCompatActivity {
             login_value = 0;
         }
 
-
-
-        if (auto_login_info.equals("")) {
-
+        if (auto_login_info.equals("") || auto_login_info.equals("0") && login_value == 0) {
+            sharedPreferences.edit().clear();
             navigationView.inflateHeaderView(R.layout.main_navi_header);
             navigationView.inflateMenu(R.menu.main_navi_menu);
             navigationView1();
-        } else{
+
+        } else if (auto_login_info.equals("0") && login_value == 1){
+            navigationView.inflateHeaderView(R.layout.main_navi_header2);
+            navigationView.inflateMenu(R.menu.main_navi_menu2);
+            navigationView2();
+
+        } else if (auto_login_info.equals("1")){
             navigationView.inflateHeaderView(R.layout.main_navi_header2);
             navigationView.inflateMenu(R.menu.main_navi_menu2);
             navigationView2();
@@ -160,20 +165,34 @@ public class FirstMainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 switch (view.getId()){
-                    case R.id.bt_first_main_button_1:
+                    case R.id.bt_main_MedicineSearch:
                         timer.cancel();
                         intent = new Intent(getApplicationContext(), MdSearchActivity.class);
                         startActivity(intent);
                         break;
 
-                    case R.id.bt_first_main_button_2:
+                    case R.id.bt_main_medicinePrice:
                         timer.cancel();
                         intent = new Intent(getApplicationContext(), MdPriceActivity.class);
                         startActivity(intent);
                         break;
 
-                    case R.id.bt_first_main_button_3:
+                    case R.id.bt_main_medicineCheck :
+                        Toast.makeText(getApplicationContext(), "추후 업데이트 예정입니다.",Toast.LENGTH_SHORT).show();
+                        break;
 
+                    case R.id.bt_main_sellCheck:
+                        timer.cancel();
+                        if (login_value == 0){
+
+                            Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent1);
+
+                        } else if (login_value == 1){
+
+                            Intent intent1 = new Intent(getApplicationContext(), SellCheckActivity.class);
+                            startActivity(intent1);
+                        }
                         break;
 
                     case R.id.imgv_main_mypage:
@@ -195,9 +214,10 @@ public class FirstMainActivity extends AppCompatActivity {
 
             }
         };
-        bt_button1.setOnClickListener(cl);
-        bt_button2.setOnClickListener(cl);
-        bt_button3.setOnClickListener(cl);
+        bt_main_MedicineSearch.setOnClickListener(cl);
+        bt_main_MedicinePrice.setOnClickListener(cl);
+        bt_main_medicineCheck.setOnClickListener(cl);
+        bt_main_SellCheck.setOnClickListener(cl);
         bt_mypage.setOnClickListener(cl);
         tv_service.setOnClickListener(cl);
         tv_data.setOnClickListener(cl);
@@ -210,8 +230,17 @@ public class FirstMainActivity extends AppCompatActivity {
 
                 switch (item.getItemId()){
 
-                    case R.id.pmrecevie:
+                    case R.id.sellCheck:
+                        if (login_value == 0){
 
+                            Intent intent1 = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent1);
+
+                        } else if (login_value == 1){
+
+                            Intent intent1 = new Intent(getApplicationContext(), SellCheckActivity.class);
+                            startActivity(intent1);
+                        }
                         break;
 
                     case R.id.logout:

@@ -20,11 +20,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
     // vlaue값
-    // 0:가입, 1:id확인, 2:로그인, 3:id전자영수증, 4:전자영수증자세히보기
+    // 0:가입, 1:id확인, 2:로그인
 
     Button bt_login;
-    EditText et_id, et_pw;
-    TextView bt_membership;
+    EditText et_id;
+//    EditText et_pw;
 
     String value = "2";
     String value_id = null, value_pw = null;
@@ -42,9 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         et_id = findViewById(R.id.et_id);
-        et_pw = findViewById(R.id.et_pw);
+//        et_pw = findViewById(R.id.et_pw);
         bt_login = findViewById(R.id.bt_login);
-        bt_membership = findViewById(R.id.tv_membership);
         ckb_autologin = findViewById(R.id.ckb_autologin);
 
 
@@ -59,11 +58,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 value_id = et_id.getText().toString();
-                value_pw = et_pw.getText().toString();
+//                value_pw = et_pw.getText().toString();
 
-                if (value_id.length() != 0 && value_pw.length() != 0){
-                    Log.d("로그인 내용", et_id.getText().toString());
-                    Log.d("로그인 내용", et_pw.getText().toString());
+                if (value_id.length() != 0){
                     bt_login.setBackgroundResource(R.drawable.background_login_button_b);
                     bt_login.setTextColor(R.color.white);
                 }
@@ -75,33 +72,33 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        et_pw.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                value_id = et_id.getText().toString();
-                value_pw = et_pw.getText().toString();
-
-                if (value_id.length() != 0 && value_pw.length() != 0){
-                    bt_login.setBackgroundResource(R.drawable.background_login_button_b);
-                    bt_login.setTextColor(R.color.black);
-                } else {
-                    bt_login.setBackgroundResource(R.drawable.background_login_button);
-                    bt_login.setTextColor(R.color.black);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-
-            }
-        });
+//        et_pw.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @SuppressLint("ResourceAsColor")
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                value_id = et_id.getText().toString();
+//                value_pw = et_pw.getText().toString();
+//
+//                if (value_id.length() != 0 && value_pw.length() != 0){
+//                    bt_login.setBackgroundResource(R.drawable.background_login_button_b);
+//                    bt_login.setTextColor(R.color.black);
+//                } else {
+//                    bt_login.setBackgroundResource(R.drawable.background_login_button);
+//                    bt_login.setTextColor(R.color.black);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//
+//            }
+//        });
 
         //로그인 버튼 클릭
         bt_login.setOnClickListener(new View.OnClickListener() {
@@ -110,20 +107,17 @@ public class LoginActivity extends AppCompatActivity {
                 try {
 
                     value_id = et_id.getText().toString();
-                    value_pw = et_pw.getText().toString();
+//                    value_pw = et_pw.getText().toString();
 
                     ServerRegisterActivity task = new ServerRegisterActivity();
-                    result = task.execute(value, value_id, value_pw).get();
+                    result = task.execute(value, value_id).get();
                     rs = result.trim();
-                    String[] hp = rs.split("/");
+                    String[] userData = rs.split("/");
 
                     if (rs.equals("0")){
                         Toast.makeText(getApplicationContext(),"아이디를 확인해주세요.",Toast.LENGTH_SHORT).show();
 
-                    } else if (rs.equals("1")){
-                        Toast.makeText(getApplicationContext(),"비밀번호를 확인해주세요.",Toast.LENGTH_SHORT).show();
-
-                    } else if (hp[0].equals("2")){
+                    } else if (userData[0].equals("1")){
 
                         //기존 메인뷰 삭제
                         FirstMainActivity firstMainActivity = (FirstMainActivity) FirstMainActivity.firstmain;
@@ -135,24 +129,23 @@ public class LoginActivity extends AppCompatActivity {
                             sharedPreferences = getSharedPreferences("LoginUserinfo", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            Log.d("MemberInfoDBUplode1", hp[1]);
-
-                            editor.putString("hp", hp[1]);
-                            editor.putString("user_nm", hp[2]);
                             editor.putString("login", "1");
-                            editor.putString("id", value_id);
+                            editor.putString("pid", value_id);
+                            editor.putString("user_nm", userData[2]);
+
+
                             editor.commit();
 
                         } else if (ckb_autologin.isChecked() == false){
                             sharedPreferences = getSharedPreferences("LoginUserinfo", MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                            Log.d("MemberInfoDBUplode2", hp[1]);
+                            Log.d("MemberInfoDBUplode2", userData[1]);
 
-                            editor.putString("hp", hp[1]);
-                            editor.putString("user_nm", hp[2]);
                             editor.putString("login", "0");
-                            editor.putString("id", value_id);
+                            editor.putString("pid", value_id);
+                            editor.putString("user_nm", userData[2]);
+
                             editor.commit();
                         }
 
@@ -169,13 +162,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //회원가입 버튼 클릭
-        bt_membership.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplication(), MembershipActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }
